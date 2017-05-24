@@ -12,13 +12,13 @@ import java.sql.Date;
  *
  * @author Администратор
  */
-public class Containers3 implements IEntity{
+public class Containers3rdQuery implements IEntity{
     private String date;
    private String fname;
    private int memberscnt;
    private int amount;
 
-    public Containers3() {
+    public Containers3rdQuery() {
     }
  public int getAmount() {
         return amount;

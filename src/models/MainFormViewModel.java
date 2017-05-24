@@ -15,6 +15,7 @@ import control.FamilyServ;
 import entities.Balance;
 import entities.BalanceChange;
 import entities.ChangeType;
+import entities.Family;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -25,19 +26,20 @@ import manager.DbManager;
  *
  * @author Администратор
  */
-public class DSbModel {
+public class MainFormViewModel {
  //   private BalanceServ b = new BalanceServ();
     private BalanceChangeServ bc = new BalanceChangeServ();
     private ChangeTypeServ ct = new ChangeTypeServ();
+    private FamilyServ family = new FamilyServ();
  //   private FamilyMemberServ fm = new FamilyMemberServ();
   //  private FamilyServ f = new FamilyServ();
     
     private DbManager dbManager = null;
 
-    public DSbModel() {
+    public MainFormViewModel() {
     }
 
-    public DSbModel(DbManager dbManager) {
+    public MainFormViewModel(DbManager dbManager) {
         this.dbManager = dbManager;
     }
 
@@ -45,13 +47,14 @@ public class DSbModel {
         this.dbManager = dbManager;
         bc.setManager(dbManager);
         ct.setManager(dbManager);
+        family.setManager(dbManager);
     }
     
-    public void addcb(BalanceChange entity) throws SQLException{
+    public void addBc(BalanceChange entity) throws SQLException{
         
         bc.add(entity);
     }
-    public void addct(ChangeType entity1) throws SQLException{
+    public void addCt(ChangeType entity1) throws SQLException{
         ct.add(entity1);
        
     }
@@ -74,7 +77,7 @@ public class DSbModel {
         try {
             bc.delete(entity);
         } catch (SQLException ex) {
-            Logger.getLogger(DSbModel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainFormViewModel.class.getName()).log(Level.SEVERE, null, ex);
         }
            }
     
@@ -84,5 +87,8 @@ public class DSbModel {
     
     public List<ChangeType> getCts() throws SQLException{
         return ct.all();
+    }
+    public List<Family> getFamily() throws SQLException{
+        return family.all();
     }
 }

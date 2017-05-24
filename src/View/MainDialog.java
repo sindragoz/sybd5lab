@@ -17,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import manager.DbManager;
-import models.DSbModel;
+import models.MainFormViewModel;
 
 /**
  *
@@ -25,7 +25,7 @@ import models.DSbModel;
  */
 public class MainDialog extends javax.swing.JFrame  {
 
-    private DSbModel model = new DSbModel();
+    private MainFormViewModel model = new MainFormViewModel();
     private DbManager dbManager = null;
     
    
@@ -59,14 +59,16 @@ this.onInsert=onInsert;
         jLabel4 = new javax.swing.JLabel();
         tbdate = new javax.swing.JTextField();
         btnOK = new javax.swing.JButton();
-        cbtype = new javax.swing.JComboBox<>();
+        cbType = new javax.swing.JComboBox<>();
         spamount = new javax.swing.JSpinner();
         tbreason = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        cbcb_id = new javax.swing.JComboBox<>();
+        cbBC_id = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        cbct_id = new javax.swing.JComboBox<>();
+        cbCT_id = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
+        cbFamily_id = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -88,19 +90,23 @@ this.onInsert=onInsert;
             }
         });
 
-        cbtype.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel8.setText("reason");
 
-        cbcb_id.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbcb_id.setEnabled(false);
+        cbBC_id.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbBC_id.setEnabled(false);
 
-        jLabel5.setText("cb_id");
+        jLabel5.setText("bc_id");
 
-        cbct_id.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cbct_id.setEnabled(false);
+        cbCT_id.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbCT_id.setEnabled(false);
 
         jLabel6.setText("ct_id");
+
+        cbFamily_id.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel7.setText("f_id");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,42 +115,49 @@ this.onInsert=onInsert;
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(cbcb_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbBC_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(15, 15, 15)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(cbct_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbCT_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addGap(15, 15, 15)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(cbtype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(15, 15, 15)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cbFamily_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addGap(15, 15, 15)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
+                        .addGap(34, 34, 34)
                         .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tbdate, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(tbdate, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel4)
-                        .addGap(79, 79, 79)
-                        .addComponent(jLabel8)
-                        .addGap(0, 63, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(spamount, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tbreason)))
+                        .addComponent(spamount, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jLabel4)))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(tbreason, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(94, 94, 94)))
                 .addComponent(btnOK)
                 .addContainerGap())
         );
@@ -158,13 +171,17 @@ this.onInsert=onInsert;
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbFamily_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbct_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbCT_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbcb_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbBC_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -178,7 +195,7 @@ this.onInsert=onInsert;
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbtype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cbType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -188,19 +205,21 @@ this.onInsert=onInsert;
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         
            // SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            BalanceChange entity = new BalanceChange();
+            BalanceChange entityBC = new BalanceChange();
             
             //java.util.Date dat_utl = format.parse(tbdate.getText());
-            entity.setDate(tbdate.getText());
+            entityBC.setDate(tbdate.getText());
             
-            entity.setReason(tbreason.getText());
-            entity.setAmount((int) spamount.getValue());
-            entity.setF_id(1);
-             ChangeType entity1 = new ChangeType();
-              entity1.setType(Integer.parseInt(cbtype.getSelectedItem().toString()));
+            entityBC.setReason(tbreason.getText());
+            entityBC.setAmount((int) spamount.getValue());
+            int F_id=Integer.parseInt(cbFamily_id.getSelectedItem().toString());
+            entityBC.setF_id(F_id);
+             ChangeType entityCT = new ChangeType();
+             int type=Integer.parseInt(cbType.getSelectedItem().toString());
+              entityCT.setType(type);
             if (onInsert){
         try {
-            model.addcb(entity);
+            model.addBc(entityBC);
         } catch (SQLException ex) {
             Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -210,31 +229,31 @@ this.onInsert=onInsert;
            //1,get salary,50000,'2016-12-12'
        
                 try {
-                    entity1.setBc_id((model.getBcs().get(model.getBcs().size()-1)).getId());
+                    entityCT.setBc_id((model.getBcs().get(model.getBcs().size()-1)).getId());
                 } catch (SQLException ex) {
                     Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
                 }
    
            
         try {
-            model.addct(entity1);
+            model.addCt(entityCT);
         } catch (SQLException ex) {
             Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
             }
          if(!onInsert){
-         entity.setId(Integer.parseInt(cbcb_id.getSelectedItem().toString()));     
-               entity1.setId(Integer.parseInt(cbct_id.getSelectedItem().toString())); 
-               entity1.setBc_id(Integer.parseInt(cbcb_id.getSelectedItem().toString()));
+         entityBC.setId(Integer.parseInt(cbBC_id.getSelectedItem().toString()));     
+               entityCT.setId(Integer.parseInt(cbCT_id.getSelectedItem().toString())); 
+               entityCT.setBc_id(Integer.parseInt(cbBC_id.getSelectedItem().toString()));
                
                try {
-                    model.updatect(entity1);
+                    model.updatect(entityCT);
                 } catch (SQLException ex) {
                    
                     Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
                 }
                try {
-                    model.updatebc(entity);
+                    model.updatebc(entityBC);
                 } catch (SQLException ex) {
                     Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -245,27 +264,35 @@ this.onInsert=onInsert;
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-     cbtype.removeAllItems();
+     cbType.removeAllItems();
             model.setDbManager(dbManager);
-            cbtype.addItem(1+"");
-            cbtype.addItem(-1+"");
-            cbcb_id.setEnabled(!onInsert);
-            cbct_id.setEnabled(!onInsert);
-              cbcb_id.removeAllItems();
-              cbct_id.removeAllItems();
+            cbType.addItem(1+"");
+            cbType.addItem(-1+"");
+            cbBC_id.setEnabled(!onInsert);
+            cbCT_id.setEnabled(!onInsert);
+              cbBC_id.removeAllItems();
+              cbCT_id.removeAllItems();
+              cbFamily_id.removeAllItems();
+               try {
+             for(Family a:model.getFamily())
+                 cbFamily_id.addItem(a.getId()+"");
+         } catch (SQLException ex) {
+             Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
+         }
             if(!onInsert){
          try {
              for(BalanceChange a:model.getBcs())
-                 cbcb_id.addItem(a.getId()+"");
+                 cbBC_id.addItem(a.getId()+"");
          } catch (SQLException ex) {
              Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
          }
           try {
              for(ChangeType a:model.getCts())
-                 cbct_id.addItem(a.getId()+"");
+                 cbCT_id.addItem(a.getId()+"");
          } catch (SQLException ex) {
              Logger.getLogger(MainDialog.class.getName()).log(Level.SEVERE, null, ex);
          }
+          
             }
             
           
@@ -308,14 +335,16 @@ this.onInsert=onInsert;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOK;
-    private javax.swing.JComboBox<String> cbcb_id;
-    private javax.swing.JComboBox<String> cbct_id;
-    private javax.swing.JComboBox<String> cbtype;
+    private javax.swing.JComboBox<String> cbBC_id;
+    private javax.swing.JComboBox<String> cbCT_id;
+    private javax.swing.JComboBox<String> cbFamily_id;
+    private javax.swing.JComboBox<String> cbType;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JSpinner spamount;
     private javax.swing.JTextField tbdate;

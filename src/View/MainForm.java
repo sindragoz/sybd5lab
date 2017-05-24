@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import manager.DbManager;
-import models.DSbModel;
+import models.MainFormViewModel;
 
 /**
  *
@@ -35,7 +35,7 @@ public class MainForm extends javax.swing.JFrame {
     
     private DefaultTableModel tableModel = new DefaultTableModel();
     
-    private DSbModel model = new DSbModel();
+    private MainFormViewModel model = new MainFormViewModel();
 
     private ConnectionContainer connCt= new  ConnectionContainer("jdbc:postgresql://127.0.0.1:5432/fbudget",
                                                     "postgres",

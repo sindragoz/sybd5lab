@@ -34,7 +34,6 @@ import tools.TableTool;
  */
 public class VewForm extends javax.swing.JFrame {
  AbstractService service = null;
- AbstractService service1 = null;
     private DefaultTableModel tableModel = new DefaultTableModel();
     private DbManager dbManager;
     /**
@@ -219,11 +218,11 @@ String []tbvals;
 public void setService(AbstractService service){
         this.service = service;
     }
-    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
-        try {
-        //    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        if (service instanceof BalanceChangeServ){
+private void insertOrUpdateBC(){
+
+    try{
             BalanceChange entity = new BalanceChange();  
+              entity.setId(Long.parseLong(cbUpdate.getItemAt(cbUpdate.getSelectedIndex()).split(" ")[0]));
            // entity.setF_id(Long.parseLong("1"));
             entity.setF_id(Long.parseLong(cbFname.getItemAt(cbFname.getSelectedIndex()).split(" ")[0]));
             entity.setAmount(Integer.parseInt(tbvals[0]));
@@ -231,11 +230,18 @@ public void setService(AbstractService service){
             // SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
            //  java.util.Date dt = format.parse(insert[3]);
             entity.setDate(tbvals[1]);
-             service.add(entity);
-        }
-         if (service instanceof BalanceServ){
-           
+              if (ins==true)
+                service.add(entity);
+                if(ins==false)
+                service.update(entity);
+    }catch(Exception ex){
+    }     
+}
+private void insertOrUpdateBalance(){
+
+    try{
             Balance entity = new Balance();
+              entity.setId(Long.parseLong(cbUpdate.getItemAt(cbUpdate.getSelectedIndex()).split(" ")[0]));
  entity.setF_id(Long.parseLong(cbFname.getItemAt(cbFname.getSelectedIndex()).split(" ")[0]));
           //  java.util.Date dat_utl = format.parse(values[2]);
             entity.setDate(tbvals[1]);
@@ -243,42 +249,99 @@ public void setService(AbstractService service){
 
             entity.setAmount(Integer.parseInt(tbvals[0]));
          //   entity.setF_id(Long.parseLong(tbvals[0]));
-             service.add(entity);
-         }
-         if(service instanceof ChangeTypeServ){
-         ChangeType entity = new ChangeType();  
+              if (ins==true)
+                service.add(entity);
+                if(ins==false)
+                service.update(entity);
+    }catch(Exception ex){
+    }     
+}
+private void insertOrUpdateCT(){
+
+    try{
+           ChangeType entity = new ChangeType();  
+             entity.setId(Long.parseLong(cbUpdate.getItemAt(cbUpdate.getSelectedIndex()).split(" ")[0]));
          //   entity.setBc_id(Long.parseLong(tbvals[1]));
              entity.setBc_id(Long.parseLong(cbAmount.getItemAt(cbAmount.getSelectedIndex()).split(" ")[0]));
             if(Integer.parseInt(tbvals[0])>0)
             entity.setType(1);
             else
                 entity.setType(-1);
-            service.add(entity);
-         }
-          if(service instanceof FamilyMemberServ){
-           FamilyMember entity = new FamilyMember();  
+             if (ins==true)
+                service.add(entity);
+                if(ins==false)
+                service.update(entity);
+    }catch(Exception ex){
+    }     
+}
+private void insertOrUpdateFM(){
+
+    try{
+            FamilyMember entity = new FamilyMember();  
+              entity.setId(Long.parseLong(cbUpdate.getItemAt(cbUpdate.getSelectedIndex()).split(" ")[0]));
           //  entity.setF_id(Long.parseLong(tbvals[0]));
            entity.setF_id(Long.parseLong(cbFname.getItemAt(cbFname.getSelectedIndex()).split(" ")[0]));
             entity.setSec_name(tbvals[1]);
             entity.setName(tbvals[2]);
             entity.setPatroname(tbvals[3]);
             entity.setStatus(tbvals[4]);
-            service.add(entity);
-          }
-           if(service instanceof FamilyServ){
-                Family entity = new Family();  
+             if (ins==true)
+                service.add(entity);
+                if(ins==false)
+                service.update(entity);
+    }catch(Exception ex){
+    }     
+}
+private void insertOrUpdateFamily(){
+
+    try{
+            Family entity = new Family();  
+              entity.setId(Long.parseLong(cbUpdate.getItemAt(cbUpdate.getSelectedIndex()).split(" ")[0]));
                 entity.setMembercnt(Short.parseShort(tbvals[1]));
                 entity.setName(tbvals[0]);
+                if (ins==true)
                 service.add(entity);
+                if(ins==false)
+                service.update(entity);
+    }catch(Exception ex){
+        JOptionPane.showMessageDialog(rootPane,ex.getMessage());
+    }     
+}
+boolean ins;
+    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
+       ins=true;
+        try {
+            
+        //    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        if (service instanceof BalanceChangeServ){
+            insertOrUpdateBC();
+          
+        }
+         if (service instanceof BalanceServ){
+           insertOrUpdateBalance();
+          
+         }
+         if(service instanceof ChangeTypeServ){
+         insertOrUpdateCT();
+     
+         }
+          if(service instanceof FamilyMemberServ){
+          insertOrUpdateFM();
+          
+          }
+           if(service instanceof FamilyServ){
+              insertOrUpdateFamily();
+              
            }
+           
          
            
          
           PrintData();  
-           FillCb();
+           fillCbs();
         } catch (Exception ex) {
            PrintData();
-            FillCb();
+            fillCbs();
            if (!ex.getMessage().equals("Запрос не вернул результатов."))JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
     }//GEN-LAST:event_btnInsertActionPerformed
@@ -291,16 +354,15 @@ public void setService(AbstractService service){
         }
     }
     
-    private void FillCb(){
+    private void FillCb(BalanceServ service){
         try {
             cbUpdate.removeAllItems();
             cbDelete.removeAllItems();
             cbCols.removeAllItems();
            cbFname.removeAllItems();
-           cbAmount.removeAllItems();
-          
+           cbAmount.removeAllItems();   
            cbAmount.setVisible(false);
-            if(service instanceof BalanceServ){
+            
           List <Balance> entitiesB = service.all();
          
           //  cbCols.addItem("fname");
@@ -311,9 +373,18 @@ public void setService(AbstractService service){
                 cbDelete.addItem(e+"");
                 
             }
-           
-            }
-            if(service instanceof BalanceChangeServ){
+           setForeignValues();
+            
+        }catch(Exception ex){}
+    } 
+    private void FillCb(BalanceChangeServ service){
+                     cbUpdate.removeAllItems();
+            cbDelete.removeAllItems();
+            cbCols.removeAllItems();
+           cbFname.removeAllItems();
+           cbAmount.removeAllItems();   
+           cbAmount.setVisible(false);
+try{          
           List <BalanceChange> entitiesBc = service.all();
                // cbCols.addItem("fname");
                 cbCols.addItem("amount");
@@ -324,8 +395,18 @@ public void setService(AbstractService service){
                 cbUpdate.addItem(e+"");
                 cbDelete.addItem(e+"");
             }
-            }
-            if(service instanceof ChangeTypeServ){
+            setForeignValues();
+            
+    }catch(Exception ex){}
+}
+            private void FillCb(ChangeTypeServ service){
+                          cbUpdate.removeAllItems();
+            cbDelete.removeAllItems();
+            cbCols.removeAllItems();
+           cbFname.removeAllItems();
+           cbAmount.removeAllItems();   
+           cbAmount.setVisible(false);
+           try{
           List <ChangeType> entities = service.all();
             cbCols.addItem("type");
             cbAmount.setVisible(true);
@@ -334,9 +415,19 @@ public void setService(AbstractService service){
                 cbUpdate.addItem(e+"");
                 cbDelete.addItem(e+"");
                  cbFname.setVisible(false);
+            
             }
+            setForeignValues();
+                }catch(Exception ex){}
             }
-            if(service instanceof FamilyMemberServ){
+             private void FillCb(FamilyMemberServ service){
+            cbUpdate.removeAllItems();
+            cbDelete.removeAllItems();
+            cbCols.removeAllItems();
+           cbFname.removeAllItems();
+           cbAmount.removeAllItems();   
+           cbAmount.setVisible(false);
+            try{
           List <FamilyMember> entities = service.all();
        //     cbCols.addItem("fname");
                 cbCols.addItem("second name");
@@ -347,8 +438,17 @@ public void setService(AbstractService service){
                 cbUpdate.addItem(e+"");
                 cbDelete.addItem(e+"");
             }
+            setForeignValues();
+            }catch(Exception ex){}
             }
-            if(service instanceof FamilyServ){
+             private void FillCb(FamilyServ service){
+            cbUpdate.removeAllItems();
+            cbDelete.removeAllItems();
+            cbCols.removeAllItems();
+           cbFname.removeAllItems();
+           cbAmount.removeAllItems();   
+           cbAmount.setVisible(false);
+                 try{
           List <Family> entities = service.all();
              cbCols.addItem("fname");
                 cbCols.addItem("memberscnt");
@@ -357,20 +457,24 @@ public void setService(AbstractService service){
                 cbDelete.addItem(e+"");
             }
              cbFname.setVisible(false);
-            }
-            service1=new FamilyServ(dbManager);
+             setForeignValues();
+            }catch(Exception ex){}
+                 
+             }
+             private void setForeignValues(){
+            FamilyServ Fservice=new FamilyServ(dbManager);
            List <Family> entitiesF;
             try {
-                entitiesF = service1.all();
+                entitiesF = Fservice.all();
                 for(Family e : entitiesF)
                 cbFname.addItem(e+"");
             } catch (SQLException ex) {
                 Logger.getLogger(VewForm.class.getName()).log(Level.SEVERE, null, ex);
             }
              
-                service1=new BalanceChangeServ(dbManager);
+             BalanceChangeServ BCservice=new BalanceChangeServ(dbManager);
                 try {
-                    List <BalanceChange> entitiesCT = service1.all();
+                    List <BalanceChange> entitiesCT = BCservice.all();
                     for(BalanceChange e : entitiesCT)
                 cbAmount.addItem(e+"");
                 } catch (SQLException ex) {
@@ -378,11 +482,31 @@ public void setService(AbstractService service){
                 }
              
             
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+      
           
         }
-    }
+ private void fillCbs(){
+  if(service instanceof FamilyServ){
+          
+           FillCb((FamilyServ)service);
+     }
+     if(service instanceof BalanceServ){
+       
+        FillCb((BalanceServ)service);
+     }
+      if(service instanceof BalanceChangeServ){
+      
+         FillCb((BalanceChangeServ)service);
+      }
+       if(service instanceof ChangeTypeServ){
+       
+        FillCb((ChangeTypeServ)service);
+       }
+        if(service instanceof FamilyMemberServ){
+       
+             FillCb((FamilyMemberServ)service);
+        }
+ }   
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
  try { 
@@ -390,106 +514,84 @@ public void setService(AbstractService service){
            Family  entity = new Family();
            entity.setId(Long.parseLong(cbDelete.getItemAt(cbDelete.getSelectedIndex()).split(" ")[0]));
            service.delete(entity);
+          
      }
      if(service instanceof BalanceServ){
         Balance entity = new Balance();
         entity.setId(Long.parseLong(cbDelete.getItemAt(cbDelete.getSelectedIndex()).split(" ")[0]));
         service.delete(entity);
+        
      }
       if(service instanceof BalanceChangeServ){
         BalanceChange entity = new BalanceChange();
         entity.setId(Long.parseLong(cbDelete.getItemAt(cbDelete.getSelectedIndex()).split(" ")[0]));
         service.delete(entity);
+        
       }
        if(service instanceof ChangeTypeServ){
         ChangeType entity = new ChangeType();
         entity.setId(Long.parseLong(cbDelete.getItemAt(cbDelete.getSelectedIndex()).split(" ")[0]));
         service.delete(entity);
+     
        }
         if(service instanceof FamilyMemberServ){
         FamilyMember entity = new FamilyMember();
             entity.setId(Long.parseLong(cbDelete.getItemAt(cbDelete.getSelectedIndex()).split(" ")[0]));
             service.delete(entity);
+           
         }
-            FillCb();
+           
             PrintData();
+            fillCbs();
        } catch (Exception ex) {
            PrintData();
-            FillCb();
+            fillCbs();
            if (!ex.getMessage().equals("Запрос не вернул результатов."))JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-      try{ 
-     
+   ins=false;
+        try {
+            
+        //    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         if (service instanceof BalanceChangeServ){
-            
-            BalanceChange entity = new BalanceChange();  
-            entity.setId(Long.parseLong(cbUpdate.getItemAt(cbUpdate.getSelectedIndex()).split(" ")[0]));
-            
-             entity.setF_id(Long.parseLong(tbvals[0]));
-            entity.setAmount(Integer.parseInt(tbvals[1]));
-            entity.setReason(tbvals[3]);
-            // SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-           //  java.util.Date dt = format.parse(insert[3]);
-            entity.setDate(tbvals[2]);
-         //    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            // java.util.Date dt = format.parse(insert[3]
-             service.update(entity);
+            insertOrUpdateBC();
+          
         }
          if (service instanceof BalanceServ){
-           
-            Balance entity = new Balance();
-entity.setId(Long.parseLong(cbUpdate.getItemAt(cbUpdate.getSelectedIndex()).split(" ")[0]));
-          //  java.util.Date dat_utl = format.parse(values[2]);
-           entity.setDate(tbvals[2]);
-         //   entity.setDate(new java.sql.Date(dat_utl.getTime()));
-
-            entity.setAmount(Integer.parseInt(tbvals[1]));
-            entity.setF_id(Long.parseLong(tbvals[0]));
-             service.update(entity);
+           insertOrUpdateBalance();
+          
          }
          if(service instanceof ChangeTypeServ){
-         ChangeType entity = new ChangeType();  
-         entity.setId(Long.parseLong(cbUpdate.getItemAt(cbUpdate.getSelectedIndex()).split(" ")[0]));
-            entity.setBc_id(Long.parseLong(tbvals[1]));
-            if(Integer.parseInt(tbvals[0])>0)
-            entity.setType(1);
-            else
-                entity.setType(-1);
-            service.update(entity);
+         insertOrUpdateCT();
+     
          }
           if(service instanceof FamilyMemberServ){
-           FamilyMember entity = new FamilyMember();  
-        entity.setId(Long.parseLong(cbUpdate.getItemAt(cbUpdate.getSelectedIndex()).split(" ")[0]));
-          entity.setF_id(Long.parseLong(tbvals[0]));
-            entity.setSec_name(tbvals[1]);
-            entity.setName(tbvals[2]);
-            entity.setPatroname(tbvals[3]);
-            entity.setStatus(tbvals[4]);
-            service.update(entity);
+          insertOrUpdateFM();
+          
           }
            if(service instanceof FamilyServ){
-                Family entity = new Family();  
-                entity.setId(Long.parseLong(cbUpdate.getItemAt(cbUpdate.getSelectedIndex()).split(" ")[0]));
-                entity.setMembercnt(Short.parseShort(tbvals[1]));
-                entity.setName(tbvals[0]);
-                service.update(entity);
+              insertOrUpdateFamily();
+              
            }
+           
+         
+           
+         
+          PrintData();  
+           fillCbs();
+        } catch (Exception ex) {
            PrintData();
-           } catch (Exception ex) {
-           PrintData();
-            FillCb();
+            fillCbs();
            if (!ex.getMessage().equals("Запрос не вернул результатов."))JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
-        
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         
         PrintData();
-        FillCb();
+        fillCbs();
         tbvals=new String[cbCols.getItemCount()];
         for(int i=0;i<cbCols.getItemCount();i++){
             tbvals[i]="";

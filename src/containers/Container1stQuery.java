@@ -6,26 +6,27 @@
 package containers;
 
 import entities.IEntity;
-import java.sql.Date;
 
 /**
  *
  * @author Администратор
  */
-public class Container2 implements IEntity{
-   private int amount;
+public class Container1stQuery implements IEntity{
+    private int amount;
     private String reason;
     private int type;
 
-    public Container2() {
+    public Container1stQuery() {
     }
-public Container2(String r, int a,int t) {
+
+    public Container1stQuery(String r, int a,int t) {
        amount=a;
        reason=r;
        type=t;
        
     }
-   public int getAmount() {
+
+    public int getAmount() {
         return amount;
     }
     public String getReason() {
@@ -54,5 +55,4 @@ public void setAmount(int a) {
     public String[] getRow() {
         return new String[] {amount+"" , reason ,type+""};
     }
-    }
-
+}
